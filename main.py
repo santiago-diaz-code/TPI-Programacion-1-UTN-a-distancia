@@ -110,17 +110,36 @@ def actualizar_pais(lista_paises):
             print(f" - Población: {pais['poblacion']}")
             print(f" - Superficie: {pais['superficie']}")
             print(f" - Continente: {pais['continente']}")
-            # Solicitar nuevos datos (de esta manera se cargan los nuevos valores que van a ser lo actualizados).
-            nueva_poblacion = solicitar_entero_positivo("Ingrese la nueva población del país: ")
-            nueva_superficie = solicitar_entero_positivo("Ingrese la nueva superficie del país en km²: ")
-            nuevo_continente = solicitar_texto("Ingrese el nuevo continente al que pertenece el país: ")
+            
+            # Submenú interactivo
+            print("\n ¿Qué dato desea modificar?")
+            print("1. Solo población")
+            print("2. Solo superficie")
+            print("3. Solo continente")
+            print("4. Volver al menú principal (sin cambios)")
 
-            # Actualizar los datos
-            pais["poblacion"] = nueva_poblacion
-            pais["superficie"] = nueva_superficie
-            pais["continente"] = nuevo_continente
-            print(f"Los datos del país {nombre} han sido actualizados exitosamente.")
-            return #Corta la iteración una vez resuelto el cambio.
+            opcion_mod = solicitar_entero_positivo("Seleccione una opción: ")
+        
+            # Bloque de edición: estrictamente dentro del condicional del país
+            if opcion_mod == 1:
+                nueva_poblacion = solicitar_entero_positivo("Ingrese la nueva población del país: ")
+                pais["poblacion"] = nueva_poblacion
+                print(f"Población de {pais['nombre']} actualizada exitosamente.")
+            elif opcion_mod == 2:
+                nueva_superficie = solicitar_entero_positivo("Ingrese la nueva superficie del país en km²: ")
+                pais["superficie"] = nueva_superficie
+                print(f"Superficie de {pais['nombre']} actualizada exitosamente.")
+            elif opcion_mod == 3:
+                nuevo_continente = solicitar_texto("Ingrese el nuevo continente al que pertenece el país: ")
+                pais["continente"] = nuevo_continente
+                print(f"Continente de {pais['nombre']} actualizado exitosamente.")
+            elif opcion_mod == 4:
+                print("Operación cancelada. No se realizaron cambios.")
+            else:
+                print("Opción no válida. Regresando al menú principal sin cambios.")
+            
+            return  # Corta la función inmediatamente al terminar la edición deseada
+
     print(f"El país {nombre} no fue encontrado en la lista.")
 
 #------FUNCIÓN: Buscar país por nombre------
@@ -276,7 +295,7 @@ def menu_principal():
         print("\n---SISTEMA DE GESTIÓN DE PAISES---")
         print("1. Mostrar todos los países")
         print("2. Agregar un país")
-        print("3. Actualizar población y superficie")
+        print("3. Actualizar población, superficie y continente de un país")
         print("4. Buscar país por nombre")
         print("5. Filtrar países")
         print("6. Ordenar países")
@@ -305,6 +324,7 @@ def menu_principal():
         elif opcion == "8":
             guardar_paises(lista_paises)
             print("Cambios guardados correctamente. Gracias por utilizar el sistema.")
+            break
         
         else:
             print("Opción inválida. Intente con un número del 1 al 8.")
